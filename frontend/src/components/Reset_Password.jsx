@@ -1,0 +1,107 @@
+import { useState } from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import axios from 'axios';
+import {useNavigate ,useParams} from "react-router-dom"
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const ResetPassword =()=>{
+
+    const {id,token}=useParams();
+   const Token=`Bearer ${token}`
+
+    const navigate=useNavigate();
+    const [formData, setFormData] = useState('')
+     
+    
+      const handleChange = (e) => {
+          setFormData(e.target.value)
+      };
+    
+      const handleSubmit = async(e) => {
+        e.preventDefault();
+       
+
+        await axios.post(`http://localhost:4000/user/reset-password/${id}`,{password:formData},{headers:{authentication:Token}});
+        alert("Reset Password Successful..")
+        navigate("/signin")
+
+
+      };
+    const defaultTheme = createTheme();
+return(
+    <>
+    
+    <ThemeProvider theme={defaultTheme}>
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage:'url(https://img.freepik.com/free-vector/forgot-password-concept-illustration_114360-1123.jpg?w=740&t=st=1696162221~exp=1696162821~hmac=4eb5f1c0cbc85f45789b6b4d60d623c5a03716c9c5a74797e7452125f739d109)' , 
+             backgroundRepeat: 'no-repeat',
+            backgroundColor: (t) =>
+              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Box
+            sx={{
+              my: 8,
+              mx: 4,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                      </Avatar>
+            <Typography component="h1" variant="h5">
+           Reset Password
+            </Typography>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                type='password'
+                label="New Password"
+                name="password"
+                value={formData}
+               onChange={handleChange}
+              />
+         
+        
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+               Send
+              </Button>
+            
+            
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
+  
+    </>
+)
+
+}
+export default ResetPassword;
