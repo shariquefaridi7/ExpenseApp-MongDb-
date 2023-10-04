@@ -34,8 +34,9 @@ const navigate=useNavigate();
         } else {
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("userId", JSON.stringify(res.data.userId));
+          localStorage.setItem("isPremium",JSON.stringify(res.data.isPremium));
           alert(`Welcome back ${res.data.userName}`);
-          navigate("/Home");
+          navigate("/");
     
         }
     
@@ -110,12 +111,12 @@ return(
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link to={"/forget-password"} variant="body2">
+                  <Link to={"/forget-password"}  style={{color:"black",marginRight:"10px",textDecoration:"none",marginBottom:"10px"}} variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link to={"/"} variant="body2">
+                  <Link to={"/"} variant="body2"  style={{color:"black",marginRight:"10px",textDecoration:"none" ,marginBottom:"10px"}}>
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

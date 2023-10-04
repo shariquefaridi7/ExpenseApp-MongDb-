@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { TextField, Button, FormControl, MenuItem, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box,TextField, Button, FormControl, MenuItem, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import NavBar from './NavBar';
 import axios from 'axios';
+import PaginationComponent from "./pagination"
+
 
 const Home = () => {
 
@@ -10,8 +12,32 @@ const Home = () => {
     const [description, setDescription] = useState('');
     const [amount, setAmount] = useState('');
     const [respData, setRespData] = useState([]);
-    const [isEdit,setIsEdit] =useState(false);
-    const [id,setID]=useState(null);
+    const [isEdit, setIsEdit] = useState(false);
+    const [id, setID] = useState(null);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [count, setCount] = useState(0);
+    const totalPages = Math.ceil(count / 10)
+
+    useEffect(() => {
+        const handlePageChange = async () => {
+
+            const token = localStorage.getItem("token");
+            const userId = JSON.parse(localStorage.getItem("userId"));
+
+            const getData = await axios.get(`http://localhost:4000/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
+            if (getData.data.message) {
+                alert("Please Regester Youself")
+            }
+            else {
+                setRespData(getData.data.resp);
+                setCount(getData.data.count);
+            }
+        }
+        handlePageChange();
+    }, [currentPage])
+
+
 
 
     const categories = [
@@ -43,53 +69,58 @@ const Home = () => {
 
         const token = localStorage.getItem("token");
         const userId = JSON.parse(localStorage.getItem("userId"));
+        const dateObject=new Date();
+       const date= format(dateObject,1);
+      const month=format(dateObject,2);
 
-       if(isEdit&&id){
+        if (isEdit && id) {
 
-        const resp = await axios.put(`http://localhost:4000/expense/${userId}/${id}`, { category, description, amount }, { headers: { authentication: `Bearer ${token}` } });
+            const resp = await axios.put(`http://localhost:4000/expense/${userId}/${id}`, { category, description, amount }, { headers: { authentication: `Bearer ${token}` } });
 
-        if (resp.data.message) {
-            alert("Please Register Yourself")
-        } else {
+            if (resp.data.message) {
+                alert("Please Register Yourself")
+            } else {
 
-            const getData = await axios.get(`http://localhost:4000/expense/${userId}`, { headers: { authentication: `Bearer ${token}` } });
+                const getData = await axios.get(`http://localhost:4000/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
 
-            setRespData(getData.data);
-            setIsEdit(false);
+                setRespData(getData.data.resp);
+                setCount(getData.data.count);
+                setIsEdit(false);
+            }
         }
-    }
-      else{      
-        const resp = await axios.post("http://localhost:4000/expense/", { category, description, amount, userId }, { headers: { authentication: `Bearer ${token}` } });
+        else {
+            const resp = await axios.post("http://localhost:4000/expense/", { category, description, amount, userId ,date,month}, { headers: { authentication: `Bearer ${token}` } });
 
-        if (resp.data.message) {
-            alert("Please Register Yourself")
-        } else {
+            if (resp.data.message) {
+                alert("Please Register Yourself")
+            } else {
 
-            const getData = await axios.get(`http://localhost:4000/expense/${userId}`, { headers: { authentication: `Bearer ${token}` } });
+                const getData = await axios.get(`http://localhost:4000/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
 
-            setRespData(getData.data);
+                setRespData(getData.data.resp);
+                setCount(getData.data.count);
 
+            }
         }
-       }
 
         setCategory('');
-            setDescription('');
-            setAmount('');
+        setDescription('');
+        setAmount('');
 
-       }
-    
+    }
 
-    const handleEdit = async(resp) => {
-            setIsEdit(true);
-            setCategory(resp.category);
-            setDescription(resp.description);
-            setAmount(resp.amount);
-            setID(resp.id)
+
+    const handleEdit = async (resp) => {
+        setIsEdit(true);
+        setCategory(resp.category);
+        setDescription(resp.description);
+        setAmount(resp.amount);
+        setID(resp.id)
 
     };
 
     const handleDelete = async (id) => {
-       
+
         const token = localStorage.getItem("token");
         const userId = JSON.parse(localStorage.getItem("userId"), { headers: { authentication: `Bearer ${token}` } });
 
@@ -97,39 +128,52 @@ const Home = () => {
         if (delItem.data.message) {
             alert("Please Regester Youself");
         } else {
-            const getData = await axios.get(`http://localhost:4000/expense/${userId}`, { headers: { authentication: `Bearer ${token}` } });
+            const getData = await axios.get(`http://localhost:4000/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
 
-            setRespData(getData.data);
-            
+            setRespData(getData.data.resp);
+            setCount(getData.data.count);
+
         }
+    }
 
 
-    };
 
     // change date format
-const format=(date)=>{
-   
-const dateObject = new Date(date);
+    const format = (date,check) => {
+        if(check==1){
 
-const day = dateObject.getDate().toString().padStart(2, '0');
-const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
-const year = dateObject.getFullYear().toString(); // Get the last 2 digits of the year
+        const dateObject = new Date(date);
 
-const formattedDate = `${day}-${month}-${year}`;
-return formattedDate
-}
+        const day = dateObject.getDate().toString().padStart(2, '0');
+        const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+        const year = dateObject.getFullYear().toString(); // Get the last 2 digits of the year
+
+        const formattedDate = `${year}-${month}-${day}`;
+        return formattedDate
+        }else{
+            const dateObject = new Date(date);
+
+    
+        const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+        const year = dateObject.getFullYear().toString(); // Get the last 2 digits of the year
+
+        const formattedDate = `${year}-${month}`;
+        return formattedDate
+        }
+    }
 
 
     useEffect(() => {
         const token = localStorage.getItem("token");
         const userId = JSON.parse(localStorage.getItem("userId"));
         const fetch = async () => {
-            const getData = await axios.get(`http://localhost:4000/expense/${userId}`, { headers: { authentication: `Bearer ${token}` } });
+            const getData = await axios.get(`http://localhost:4000/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
             if (getData.data.message) {
                 alert("Please Regester Youself")
             }
             else {
-                setRespData(getData.data);
+                setRespData(getData.data.resp);
+                setCount(getData.data.count);
             }
         }
         fetch();
@@ -139,11 +183,12 @@ return formattedDate
     return (
         <>
 
-        <NavBar/>
-        <br/>
+            <NavBar />
+            <br />
+            <Box sx={{marginLeft:"30px",marginRight:"30px"}}>
             <form onSubmit={handleSubmit} >
 
-                <Grid container component={Paper} alignItems="center" style={{ paddingLeft: "60px", paddingTop: "15px", paddingBottom: "3px", border: "2px solid #22A699", borderRadius: "7px", backgroundColor: "#ECF8F9" }} >
+                <Grid container component={Paper} alignItems="center" style={{ paddingLeft: "30px", paddingTop: "15px",paddingBottom: "3px", border: "2px solid #22A699", borderRadius: "7px", backgroundColor: "#ECF8F9" }} >
                     <Grid item xs={12} sm={4}>
                         <FormControl fullWidth variant="outlined">
                             <TextField
@@ -210,12 +255,12 @@ return formattedDate
                     <TableBody style={{ border: "2px solid #22A699", backgroundColor: "#ECF8F9" }}>
                         {
                             respData.map((row, index) => {
-                                const Date=format(row.createdAt);
+                              
                                 return (
                                     <>
-                                    
+
                                         <TableRow key={index}>
-                                            <TableCell>{Date}</TableCell>
+                                            <TableCell>{row.date}</TableCell>
                                             <TableCell>{row.category}</TableCell>
                                             <TableCell>{row.description}</TableCell>
                                             <TableCell>Rs {row.amount}</TableCell>
@@ -245,6 +290,14 @@ return formattedDate
                     </TableBody>
                 </Table>
             </TableContainer>
+            </Box>
+            <br />
+            <PaginationComponent
+                currentPage={currentPage}
+                totalPages={totalPages}
+
+                setCurrentPage={setCurrentPage}
+            />
         </>
 
     );

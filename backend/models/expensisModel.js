@@ -19,5 +19,13 @@ export const expensis=sequelize.define("expensisList",{
     description:{
         type:Sequelize.STRING,
         allowNull:false
+    },
+    date:{
+        type:Sequelize.STRING,
+        allowNull:false
+    },
+    month:{
+        type:Sequelize.STRING,
+        allowNull:false
     }
 })

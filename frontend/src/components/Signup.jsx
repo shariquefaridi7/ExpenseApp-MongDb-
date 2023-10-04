@@ -41,6 +41,7 @@ const navigate=useNavigate();
     } else {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", JSON.stringify(res.data.resp.id));
+      localStorage.setItem("isPremium",res.data.resp.isPremium);
       alert("SignUp Successfuly..");
       navigate("/Home")
      
@@ -129,7 +130,7 @@ const navigate=useNavigate();
                 <Grid container>
 
                   <Grid item>
-                    <Link to={"/signin"} >
+                    <Link to={"/signin"}  style={{color:"black",marginRight:"10px",textDecoration:"none"}}>
                       {"Do have an account? Sign In"}
                     </Link>
                   </Grid>

@@ -27,7 +27,7 @@ export const signupData=async(req,res)=>{
 
     const token=jwt.sign({email},process.env.SECRET,{expiresIn:"7d"});
 
-    const resp=await userData.create({username,password:hashPassword,email});
+    const resp=await userData.create({username,password:hashPassword,email,isPremium:false});
 
     res.status(200).send({resp,token});
     }
@@ -42,13 +42,14 @@ export const signinData=async(req,res)=>{
     const checkPassword=await bcrypt.compare(password,hashPassword);
     const userId=resp.dataValues.id;
     const userName=resp.dataValues.username;
+    const isPremium=resp.dataValues.isPremium;
     if(checkPassword){
       
     // generate token for authentication
 
       const token=jwt.sign({email},process.env.SECRET,{expiresIn:"7d"});
 
-      res.status(200).send({token,userId,userName})
+      res.status(200).send({token,userId,userName,isPremium})
 
  
     }else{
@@ -62,7 +63,7 @@ export const signinData=async(req,res)=>{
 export const ForgotPass=async(req,res)=>{
   
      const {email}=req.body;
-console.log(email)
+
      const resp=await userData.findOne({where:{email}});
      const userId=resp.dataValues.id;
      if(!resp){
@@ -108,5 +109,17 @@ export const ResetPass=async(req,res)=>{
     const resp=await userData.update({password:hashPassword},{where:{id}});
     res.send({message:"Success"})
    
+
+}
+
+export const updateUser=async(req,res)=>{
+
+  const id =req.params.userId;
+
+  const resp =await userData.update({isPremium:true},{where:{id}});
+
+   res.status(200).send("update");
+
+
 
 }
