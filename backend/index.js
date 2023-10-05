@@ -7,7 +7,7 @@ import { expensis } from './models/expensisModel.js';
 import expensisRoute from './routes/expensisRoute.js';
 import leaderBoardRoute from './routes/leaderboradRoute.js';
 import premiumRouter from './routes/premiumRoute.js';
-import {dotenv} from 'dotenv'
+import dotenv from 'dotenv'
 const app=express();
 
 dotenv.config();
