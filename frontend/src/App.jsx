@@ -22,7 +22,6 @@ const App=()=>{
  
 <Route path="/signin" element={<Signin/>}  />
 <Route path="/forget-password" element={<ForgotPassword/>} />
-
 <Route path="/reset-password/:id/:token" element={<ResetPassword/>} />
 <Route path="/report" element={isPremium?<Report/>:<NotFoundPage/>} />
 <Route path="/leaderboard" element={isPremium?<Leaderborad/>:<NotFoundPage/>} />
