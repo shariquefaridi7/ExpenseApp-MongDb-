@@ -29,7 +29,7 @@ const ResetPassword =()=>{
         e.preventDefault();
        
 
-        await axios.post(`http://localhost:4000/user/reset-password/${id}`,{password:formData},{headers:{authentication:Token}});
+        await axios.post(`https://expensebackend-xksx.onrender.com/user/reset-password/${id}`,{password:formData},{headers:{authentication:Token}});
         alert("Reset Password Successful..")
         navigate("/signin")
 

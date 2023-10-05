@@ -20,7 +20,7 @@ const Leaderborad = () => {
                 authentication: `Bearer ${token}`,
             };
 
-            const response = await axios.get('http://localhost:4000/leaderboard/', {
+            const response = await axios.get('https://expensebackend-xksx.onrender.com/leaderboard/', {
                 headers,
             });
 

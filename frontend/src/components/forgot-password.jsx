@@ -27,7 +27,7 @@ const ForgotPassword =()=>{
         e.preventDefault();
         console.log(formData);
 
-        const res=await axios.post("http://localhost:4000/user/forgot-password",{email:formData});
+        const res=await axios.post("https://expensebackend-xksx.onrender.com/user/forgot-password",{email:formData});
         console.log(res);
        alert("Check You Gmail...")
 

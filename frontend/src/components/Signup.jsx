@@ -35,7 +35,7 @@ const navigate=useNavigate();
     e.preventDefault();
   
 
-    const res = await axios.post("http://localhost:4000/user/signup", formData);
+    const res = await axios.post("https://expensebackend-xksx.onrender.com/user/signup", formData);
     if (res.data.message) {
       alert(res.data.message)
     } else {

@@ -55,7 +55,7 @@ const handleSubmit=async()=>{
 
 if(!isPremium){
   try {
-    const response = await axios.post('http://localhost:4000/premium/',{userId},{ headers: { authentication: `Bearer ${token}` } });
+    const response = await axios.post('https://expensebackend-xksx.onrender.com/premium/',{userId},{ headers: { authentication: `Bearer ${token}` } });
       const res = response.data;
        
  
@@ -76,7 +76,7 @@ if(!isPremium){
               try {
                 alert("Congrats Now You are a Premium Member");
                 
-                 const resp = await axios.put(`http://localhost:4000/user/${userId}`);
+                 const resp = await axios.put(`https://expensebackend-xksx.onrender.com/user/${userId}`);
                    console.log(resp)
                    localStorage.setItem("isPremium",JSON.stringify(true));
                 

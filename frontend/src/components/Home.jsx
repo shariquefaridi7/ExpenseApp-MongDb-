@@ -25,7 +25,7 @@ const Home = () => {
             const token = localStorage.getItem("token");
             const userId = JSON.parse(localStorage.getItem("userId"));
 
-            const getData = await axios.get(`http://localhost:4000/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
+            const getData = await axios.get(`https://expensebackend-xksx.onrender.com/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
             if (getData.data.message) {
                 alert("Please Regester Youself")
             }
@@ -75,13 +75,13 @@ const Home = () => {
 
         if (isEdit && id) {
 
-            const resp = await axios.put(`http://localhost:4000/expense/${userId}/${id}`, { category, description, amount }, { headers: { authentication: `Bearer ${token}` } });
+            const resp = await axios.put(`https://expensebackend-xksx.onrender.com/expense/${userId}/${id}`, { category, description, amount }, { headers: { authentication: `Bearer ${token}` } });
 
             if (resp.data.message) {
                 alert("Please Register Yourself")
             } else {
 
-                const getData = await axios.get(`http://localhost:4000/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
+                const getData = await axios.get(`https://expensebackend-xksx.onrender.com/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
 
                 setRespData(getData.data.resp);
                 setCount(getData.data.count);
@@ -89,13 +89,13 @@ const Home = () => {
             }
         }
         else {
-            const resp = await axios.post("http://localhost:4000/expense/", { category, description, amount, userId ,date,month}, { headers: { authentication: `Bearer ${token}` } });
+            const resp = await axios.post("https://expensebackend-xksx.onrender.com/expense/", { category, description, amount, userId ,date,month}, { headers: { authentication: `Bearer ${token}` } });
 
             if (resp.data.message) {
                 alert("Please Register Yourself")
             } else {
 
-                const getData = await axios.get(`http://localhost:4000/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
+                const getData = await axios.get(`https://expensebackend-xksx.onrender.com/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
 
                 setRespData(getData.data.resp);
                 setCount(getData.data.count);
@@ -124,11 +124,11 @@ const Home = () => {
         const token = localStorage.getItem("token");
         const userId = JSON.parse(localStorage.getItem("userId"), { headers: { authentication: `Bearer ${token}` } });
 
-        const delItem = await axios.delete(`http://localhost:4000/expense/${userId}/${id}`, { headers: { authentication: `Bearer ${token}` } });
+        const delItem = await axios.delete(`https://expensebackend-xksx.onrender.com/expense/${userId}/${id}`, { headers: { authentication: `Bearer ${token}` } });
         if (delItem.data.message) {
             alert("Please Regester Youself");
         } else {
-            const getData = await axios.get(`http://localhost:4000/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
+            const getData = await axios.get(`https://expensebackend-xksx.onrender.com/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
 
             setRespData(getData.data.resp);
             setCount(getData.data.count);
@@ -167,7 +167,7 @@ const Home = () => {
         const token = localStorage.getItem("token");
         const userId = JSON.parse(localStorage.getItem("userId"));
         const fetch = async () => {
-            const getData = await axios.get(`http://localhost:4000/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
+            const getData = await axios.get(`https://expensebackend-xksx.onrender.com/expense/${userId}?page=${currentPage}&limit=10`, { headers: { authentication: `Bearer ${token}` } });
             if (getData.data.message) {
                 alert("Please Regester Youself")
             }

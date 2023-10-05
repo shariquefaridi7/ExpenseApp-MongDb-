@@ -18,7 +18,7 @@ console.log(date);
 const token = localStorage.getItem("token");
 const userId = JSON.parse(localStorage.getItem("userId")); 
 
-     const resp=await axios.get(`http://localhost:4000/expense/monthlyExpense/${userId}/${date}`,{ headers: { authentication: `Bearer ${token}` } });
+     const resp=await axios.get(`https://expensebackend-xksx.onrender.com/expense/monthlyExpense/${userId}/${date}`,{ headers: { authentication: `Bearer ${token}` } });
      setMonthData(resp.data);
   
   }
@@ -28,7 +28,7 @@ const userId = JSON.parse(localStorage.getItem("userId"));
     const token = localStorage.getItem("token");
     const userId = JSON.parse(localStorage.getItem("userId")); 
     
-      const resp=await axios.get(`http://localhost:4000/expense/dayExpense/${userId}/${date}`,{ headers: { authentication: `Bearer ${token}` } });
+      const resp=await axios.get(`https://expensebackend-xksx.onrender.com/expense/dayExpense/${userId}/${date}`,{ headers: { authentication: `Bearer ${token}` } });
      setdayData(resp.data);
 
  }
