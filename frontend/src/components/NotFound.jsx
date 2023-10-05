@@ -7,7 +7,7 @@ const NotFoundPage = () => {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
-        Page Not Found
+        Page Not Founds
       </Typography>
       <Typography variant="body1" paragraph>
         The page you are looking for does not exist.

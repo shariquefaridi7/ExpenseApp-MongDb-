@@ -12,6 +12,7 @@ import axios from "axios";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
+
 const Signin =()=>{
 
 const navigate=useNavigate();
@@ -63,7 +64,7 @@ return(
             backgroundPosition: 'center',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{  border: "2px solid #22A699", borderRadius: "7px", backgroundColor: "#ECF8F9" }}>  
           <Box
             sx={{
               my: 8,
@@ -78,7 +79,7 @@ return(
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }} >
               <TextField
                 margin="normal"
                 required

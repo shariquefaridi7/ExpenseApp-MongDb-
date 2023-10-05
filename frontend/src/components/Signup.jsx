@@ -71,7 +71,7 @@ const navigate=useNavigate();
               backgroundPosition: 'center',
             }}
           />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square  style={{ border: "2px solid #22A699", borderRadius: "7px", backgroundColor: "#ECF8F9" }}>
             <Box
               sx={{
                 my: 8,
