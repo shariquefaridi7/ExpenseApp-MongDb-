@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const Signup = () => {
 
 
-const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -33,7 +33,7 @@ const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
 
     const res = await axios.post("https://expensebackend-xksx.onrender.com/user/signup", formData);
     if (res.data.message) {
@@ -41,10 +41,10 @@ const navigate=useNavigate();
     } else {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", JSON.stringify(res.data.resp.id));
-      localStorage.setItem("isPremium",res.data.resp.isPremium);
+      localStorage.setItem("isPremium", res.data.resp.isPremium);
       alert("SignUp Successfuly..");
-      navigate("/Home")
-     
+      navigate("/")
+
 
     }
 
@@ -71,7 +71,7 @@ const navigate=useNavigate();
               backgroundPosition: 'center',
             }}
           />
-          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square  style={{ border: "2px solid #22A699", borderRadius: "7px", backgroundColor: "#ECF8F9" }}>
+          <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square style={{ border: "2px solid #22A699", borderRadius: "7px", backgroundColor: "#ECF8F9" }}>
             <Box
               sx={{
                 my: 8,
@@ -130,7 +130,7 @@ const navigate=useNavigate();
                 <Grid container>
 
                   <Grid item>
-                    <Link to={"/signin"}  style={{color:"black",marginRight:"10px",textDecoration:"none"}}>
+                    <Link to={"/signin"} style={{ color: "black", marginRight: "10px", textDecoration: "none" }}>
                       {"Do have an account? Sign In"}
                     </Link>
                   </Grid>

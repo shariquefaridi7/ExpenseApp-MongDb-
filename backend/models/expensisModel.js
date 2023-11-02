@@ -1,31 +1,31 @@
-import { Sequelize } from "sequelize";
-import { sequelize } from "../util/dbconfig.js";
+import mongoose from 'mongoose';
 
-export const expensis=sequelize.define("expensisList",{
-    id:{
-        type:Sequelize.INTEGER,
-        allowNull:false,
-        autoIncrement:true,
-        primaryKey:true
+const expensisSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "user"
     },
-    category:{
-        type:Sequelize.STRING,
-        allowNull:false
+    category: {
+        type: String,
+        required: true
     },
-    amount:{
-        type:Sequelize.INTEGER,
-        allowNull:false
+    amount: {
+        type: Number,
+        required: true
     },
-    description:{
-        type:Sequelize.STRING,
-        allowNull:false
+    description: {
+        type: String,
+        required: true
     },
-    date:{
-        type:Sequelize.STRING,
-        allowNull:false
+    date: {
+        type: String,
+        required: true
     },
-    month:{
-        type:Sequelize.STRING,
-        allowNull:false
+    month: {
+        type: String,
+        required: true
     }
-})
+});
+
+export const expensisModel = new mongoose.model("expense", expensisSchema);
